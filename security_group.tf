@@ -1,24 +1,32 @@
-provider "aws" {
-region = "us-east-1"
-## if you want to mention the aws credential from different path, enable below line
-#shared_credentials_file = "$HOME/.aws/credentials"
-profile = "default"
-#version = ">=2.0"
-}
+# resource "aws_security_group" "ansible_access" {
+#   name        = "ansible-lab-sg"
+#   description = "Created by Terraform for SSH Access"
 
-# resource "aws_key_pair" "ec2loginkey" {
-# key_name = "ansiblekp"
-# ## change here if you are using different key pair
-# public_key = file(pathexpand(var.ssh_key_pair_pub))
+#   ingress {
+#     description = "SSH Access"
+#     from_port   = 22
+#     to_port     = 22
+#     protocol    = "tcp"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
+
+#   ingress {
+#     description = "HTTP Access"
+#     from_port   = 80
+#     to_port     = 80
+#     protocol    = "tcp"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
+
+#   egress {
+#     from_port        = 0
+#     to_port          = 0
+#     protocol         = "-1"
+#     cidr_blocks      = ["0.0.0.0/0"]
+#     ipv6_cidr_blocks = ["::/0"]
+#   }
+
+#   tags = {
+#     Name = "allow_ssh"
+#   }
 # }
-
-output "ansible-engine" {
-value = aws_instance.ansible-engine.public_ip
-}
-output "ansible-node-1" {
-value = aws_instance.ansible-nodes[0].public_ip
-}
-
-output "ansible-node-2" {
-value = aws_instance.ansible-nodes[1].public_ip
-}
